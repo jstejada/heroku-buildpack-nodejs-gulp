@@ -161,7 +161,10 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
     # Install gulp locally
     npm install gulp 2>&1 | indent
     # Install dev dependencies
+    tmp=$NODE_ENV
+    NODE_ENV=development
     npm install --userconfig $build_dir/.npmrc 2>&1 | indent
+    NODE_ENV=$tmp
     echo "-----> Running gulp heroku:$NODE_ENV task"
     $build_dir/node_modules/.bin/gulp heroku:$NODE_ENV
   else
