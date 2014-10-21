@@ -116,8 +116,6 @@ rm -rf "$build_dir/.npm"
 
 # If Procfile is absent, try to create one using `npm start`
 if [ ! -e $build_dir/Procfile ]; then
-  echo "$build_dir"
-  ls $build_dir
   npm_start=$(cat $build_dir/package.json | $bp_dir/vendor/jq -r .scripts.start)
 
   # If `scripts.start` is set in package.json, or a server.js file
@@ -145,9 +143,14 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
       export_env_dir $env_dir
     fi
 
+    echo "-----> Found gulpfile, installing coffee-script, gulp and dev dependencies"
+    # Install coffee-script locally
+    npm install coffee-script 2>&1 | indentl
     # Install gulp locally
-    npm install gulp
-    echo "-----> Found gulpfile, running gulp heroku:$NODE_ENV task"
+    npm install gulp 2>&1 | indentl
+    # Install dev dependencies
+    npm install --userconfig $build_dir/.npmrc 2>&1 | indentl
+    echo "-----> Running gulp heroku:$NODE_ENV task"
     $build_dir/node_modules/.bin/gulp heroku:$NODE_ENV
   else
     echo "-----> No gulpfile found"
