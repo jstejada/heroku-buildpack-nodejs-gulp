@@ -116,6 +116,8 @@ rm -rf "$build_dir/.npm"
 
 # If Procfile is absent, try to create one using `npm start`
 if [ ! -e $build_dir/Procfile ]; then
+  echo "$build_dir"
+  ls $build_dir
   npm_start=$(cat $build_dir/package.json | $bp_dir/vendor/jq -r .scripts.start)
 
   # If `scripts.start` is set in package.json, or a server.js file
