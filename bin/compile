@@ -135,16 +135,16 @@ mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
 
 # Check and run bower
-(
-  if [ -f $build_dir/bower.json ]; then
-    echo "-----> Found bower.json, installing bower."
-    npm install bower 2>&1 | indent
-    echo "-----> Running bower install"
-    $build_dir/node_modules/.bin/bower install
-  else
-    echo "-----> No gulpfile found"
-  fi
-)
+# (
+#   if [ -f $build_dir/bower.json ]; then
+#     echo "-----> Found bower.json, installing bower."
+#     npm install bower 2>&1 | indent
+#     echo "-----> Running bower install"
+#     $build_dir/node_modules/.bin/bower install
+#   else
+#     echo "-----> No gulpfile found"
+#   fi
+# )
 
 # Check and run gulp
 (
@@ -156,6 +156,7 @@ echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\
     fi
 
     echo "-----> Found gulpfile, installing coffee-script, gulp and dev dependencies"
+    npm --version
     # Install coffee-script locally
     npm install coffee-script 2>&1 | indent
     # Install gulp locally
